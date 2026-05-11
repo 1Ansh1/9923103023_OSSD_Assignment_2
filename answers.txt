@@ -1,0 +1,407 @@
+========================================
+2. HELLO WORLD SCRIPT
+File: hello.sh
+========================================
+
+#!/bin/bash
+
+echo "Hello, World!"
+
+
+========================================
+3. GREETING SCRIPT
+File: greeting.sh
+========================================
+
+#!/bin/bash
+
+echo "Enter your name:"
+read name
+
+echo "Hello, $name! Welcome to Shell Scripting."
+
+
+========================================
+4. FACTORIAL SCRIPT
+File: factorial.sh
+========================================
+
+#!/bin/bash
+
+echo "Enter a number:"
+read num
+
+factorial=1
+
+for (( i=1; i<=num; i++ ))
+do
+    factorial=$(( factorial * i ))
+done
+
+echo "Factorial of $num is $factorial"
+
+
+========================================
+5. FILE EXISTENCE CHECK SCRIPT
+File: file_exists.sh
+========================================
+
+#!/bin/bash
+
+directory=$1
+filename=$2
+
+if [ -f "$directory/$filename" ]
+then
+    echo "File exists"
+else
+    echo "File does not exist"
+fi
+
+
+========================================
+6. LIST FILES AND SIZES SCRIPT
+File: list_files.sh
+========================================
+
+#!/bin/bash
+
+directory=$1
+
+ls -lh "$directory"
+
+
+========================================
+7. COUNT LINES IN FILE SCRIPT
+File: count_lines.sh
+========================================
+
+#!/bin/bash
+
+file=$1
+
+lines=$(wc -l < "$file")
+
+echo "Number of lines: $lines"
+
+
+========================================
+8. CALCULATOR SCRIPT
+File: calculator.sh
+========================================
+
+#!/bin/bash
+
+echo "Enter first number:"
+read num1
+
+echo "Enter second number:"
+read num2
+
+echo "Addition: $(( num1 + num2 ))"
+echo "Subtraction: $(( num1 - num2 ))"
+echo "Multiplication: $(( num1 * num2 ))"
+
+if [ "$num2" -ne 0 ]
+then
+    echo "Division: $(( num1 / num2 ))"
+else
+    echo "Division by zero is not allowed"
+fi
+
+
+========================================
+9. PALINDROME CHECK SCRIPT
+File: palindrome.sh
+========================================
+
+#!/bin/bash
+
+echo "Enter a string:"
+read str
+
+reverse=$(echo "$str" | rev)
+
+if [ "$str" = "$reverse" ]
+then
+    echo "Palindrome"
+else
+    echo "Not a palindrome"
+fi
+
+
+========================================
+10. AWK SCRIPT TO PRINT SECOND COLUMN
+File: second_column.awk
+========================================
+
+BEGIN {
+    FS=","
+}
+
+{
+    print $2
+}
+
+
+========================================
+11. AWK SCRIPT TO SUM THIRD COLUMN
+File: sum_third_column.awk
+========================================
+
+BEGIN {
+    FS="\t"
+    sum=0
+}
+
+{
+    sum += $3
+}
+
+END {
+    print "Total Sum:", sum
+}
+
+
+========================================
+12. SED COMMAND TO REPLACE TEXT
+========================================
+
+sed -i 's/apple/orange/g' file.txt
+
+
+========================================
+13. SED COMMAND TO REMOVE EMPTY LINES
+========================================
+
+sed '/^$/d' file.txt
+
+
+========================================
+ADDITIONAL PREVIOUS ASSIGNMENT SCRIPTS
+========================================
+
+========================================
+1. EVEN OR ODD SCRIPT
+File: even_odd.sh
+========================================
+
+#!/bin/bash
+
+echo "Enter a number:"
+read num
+
+if (( num % 2 == 0 ))
+then
+    echo "$num is Even"
+else
+    echo "$num is Odd"
+fi
+
+
+========================================
+2. FILE PERMISSION CHECK SCRIPT
+File: check_permissions.sh
+========================================
+
+#!/bin/bash
+
+file=$1
+
+if [ -r "$file" ]
+then
+    echo "File is readable"
+else
+    echo "File is not readable"
+fi
+
+if [ -w "$file" ]
+then
+    echo "File is writable"
+else
+    echo "File is not writable"
+fi
+
+if [ -x "$file" ]
+then
+    echo "File is executable"
+else
+    echo "File is not executable"
+fi
+
+
+========================================
+3. RENAME FILES WITH TIMESTAMP
+File: rename_timestamp.sh
+========================================
+
+#!/bin/bash
+
+directory=$1
+extension=$2
+
+timestamp=$(date +"%Y%m%d_%H%M%S")
+
+for file in "$directory"/*.$extension
+do
+    filename=$(basename "$file")
+    mv "$file" "$directory/${timestamp}_$filename"
+done
+
+echo "Files renamed successfully"
+
+
+========================================
+4. DIRECTORY SIZE SCRIPT
+File: directory_size.sh
+========================================
+
+#!/bin/bash
+
+directory=$1
+
+total=$(du -sb "$directory" | cut -f1)
+
+echo "Total size: $total bytes"
+
+
+========================================
+5. FIND AND REPLACE SCRIPT
+File: find_replace.sh
+========================================
+
+#!/bin/bash
+
+directory=$1
+oldword=$2
+newword=$3
+
+find "$directory" -type f -name "*.txt" | while read file
+do
+    sed -i "s/$oldword/$newword/g" "$file"
+done
+
+echo "Replacement completed"
+
+
+========================================
+6. BACKUP SCRIPT
+File: backup.sh
+========================================
+
+#!/bin/bash
+
+source_dir=$1
+target_dir=$2
+
+timestamp=$(date +"%Y%m%d_%H%M%S")
+
+backup_name="backup_$timestamp.tar.gz"
+
+tar -czf "$target_dir/$backup_name" "$source_dir"
+
+echo "Backup created: $backup_name"
+
+
+========================================
+7. DISK MONITOR SCRIPT
+File: disk_monitor.sh
+========================================
+
+#!/bin/bash
+
+threshold=80
+
+usage=$(df / | grep / | awk '{print $5}' | sed 's/%//')
+
+if [ "$usage" -gt "$threshold" ]
+then
+    echo "ALERT: Disk usage exceeded $threshold%"
+else
+    echo "Disk usage is normal"
+fi
+
+
+========================================
+8. EXTRACT EMAILS SCRIPT
+File: extract_emails.sh
+========================================
+
+#!/bin/bash
+
+file=$1
+
+grep -E -o "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" "$file" | sort
+
+
+========================================
+9. PING CHECK SCRIPT
+File: ping_check.sh
+========================================
+
+#!/bin/bash
+
+ip=$1
+
+ping -c 1 "$ip" > /dev/null
+
+if [ $? -eq 0 ]
+then
+    echo "$ip is reachable"
+else
+    echo "$ip is not reachable"
+fi
+
+
+========================================
+10. SORT AND REMOVE DUPLICATES SCRIPT
+File: sort_unique.sh
+========================================
+
+#!/bin/bash
+
+input=$1
+output=$2
+
+sort "$input" | uniq > "$output"
+
+echo "Sorted unique lines saved in $output"
+
+
+========================================
+11. RANDOM PASSWORD GENERATOR
+File: random_password.sh
+========================================
+
+#!/bin/bash
+
+length=$1
+
+tr -dc A-Za-z0-9 </dev/urandom | head -c $length
+
+echo
+
+
+========================================
+12. FIND SYMBOLIC LINKS SCRIPT
+File: find_symlinks.sh
+========================================
+
+#!/bin/bash
+
+directory=$1
+
+find "$directory" -type l
+
+
+========================================
+13. RECURSIVE STRING SEARCH SCRIPT
+File: search_string.sh
+========================================
+
+#!/bin/bash
+
+directory=$1
+search=$2
+
+grep -rnw "$directory" -e "$search"
